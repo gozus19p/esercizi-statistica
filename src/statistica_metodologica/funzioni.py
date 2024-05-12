@@ -12,7 +12,6 @@ def median(values: list[float]) -> float:
     # Se i numeri sono pari, restituisco la semisomma dei due centrali
     if len(values) % 2 == 0:
         index_one, index_two = len(values) // 2, len(values) // 2 + 1
-        print(index_one, index_two)
         return (values[index_one-1] + values[index_two-1]) / 2.0
 
     middle_index = len(values)//2
