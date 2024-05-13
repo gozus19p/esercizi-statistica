@@ -48,8 +48,8 @@ def test_z_normale(n: int, x: int, p0: float) -> float:
     return (p_hat - p0) / math.sqrt((p0 * (1 - p0)) / n)
 
 
-def norm(z: float) -> float:
-    return stats.norm.ppf(z)
+def norm(alpha: float) -> float:
+    return stats.norm.ppf(alpha)
 
 
 def dist_binomial(n: int, k: int, p: float) -> float:

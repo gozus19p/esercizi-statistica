@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     z = (mu_c - mu) / sigma * math.sqrt(n)
     # Diviso 2 perché test bilaterale
-    cv = f.norm(1 - 0.05)
+    cv = f.norm(1 - (ls / 2))
     if z < cv:
         print(f"Non si rifiuta H0. cv={cv}, z={z}")
     else:
