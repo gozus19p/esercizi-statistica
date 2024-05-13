@@ -1,5 +1,6 @@
 import statistics
 import math
+import scipy.stats as stats
 from typing import Union
 
 
@@ -40,3 +41,16 @@ def covariance(values: list[float], values_2: list[float], population: bool = Tr
 
 def binomial_coefficient(n: int, k: int) -> float:
     return math.factorial(n) // (math.factorial(k) * math.factorial(n - k))
+
+
+def test_z_normale(n: int, x: int, p0: float) -> float:
+    p_hat = x / n
+    return (p_hat - p0) / math.sqrt((p0 * (1 - p0)) / n)
+
+
+def norm(z: float) -> float:
+    return stats.norm.ppf(z)
+
+
+def dist_binomial(n: int, k: int, p: float) -> float:
+    return binomial_coefficient(n, k) * pow(p, k) * pow(1 - p, n - k)

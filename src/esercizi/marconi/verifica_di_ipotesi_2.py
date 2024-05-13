@@ -1,5 +1,7 @@
 from statistica_metodologica import funzioni as f
 
+# ESAME 06/02/23; 26/03/24
+
 if __name__ == "__main__":
     print("""
     Un costruttore asserisce che le pompe di calore vengono installate nel 75% delle case di nuova 
@@ -11,9 +13,9 @@ if __name__ == "__main__":
     k = 10
     ls = 0.10
     p = 0.75
-    alpha = ls / 2 # Test bilaterale
+    alpha = ls / 2  # Test bilaterale
 
-    binomiale = f.binomial_coefficient(n, k) * pow(p, k) * pow(1 - p, n - k)
+    binomiale = f.dist_binomial(n, k, p)
     p_value = 1 - binomiale
     print(f"Binomiale: {binomiale}, p-value: {p_value}")
     if p_value < ls:

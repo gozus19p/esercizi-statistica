@@ -2,7 +2,6 @@ from statistica_metodologica import funzioni as f
 
 
 def esercizio_1():
-    global mappa
     print("""Data la serie riportata, relativa al carattere X afferente ai giudizi riportati da 8 studenti ad un 
    compito di matematica, determinarne: a) la media aritmetica; b) la mediana; c) la moda.""")
     data = [
@@ -64,7 +63,6 @@ def esercizio_2():
             print(f"Median = {data[i][0]}")
             break
     print(f"Median = {data[-1][0]}")
-
 
 
 if __name__ == "__main__":
