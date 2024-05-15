@@ -1,23 +1,8 @@
 from statistica_metodologica import funzioni as f
-from esercizi.marconi import binomiale
+from esercizi.marconi import probabilita
 
 
-def soluzione():
-    print("""
-        Questo è il caso classico di applicazione della distribuzione binomiale di Bernoulli, che si usa in relazione a due
-        soli possibili esiti: positivo o negativo. In questo esercizio, i positivi rappresentano le tende che resistono alla
-        prova e sono 4/5, mentre i negativi si ottengono per complemento a 1.
-        """)
-    # "n" è la dimensione del campione
-    n = 10
-    # "k" è il numero di eventi favorevoli
-    k = 7
-    # "p" è la probabilità di successo e "q" la probabilità di insuccesso
-    p = 4 / 5
-    return f.dist_binomial(n, k, p)
-
-
-def soluzione_2():
+def test_binomiale():
     print("""
         Si prenda in considerazione un concorso pubblico e in particolare l'esecuzione della prova preselettiva basata su un
         test a risposta multipla composto da 200 domande. Per ogni domanda ci sono 4 risposte alternative e solo una delle 4
@@ -39,12 +24,4 @@ def soluzione_2():
         res = f.dist_binomial(n, k, p)
         print(f"Binomiale per n={n}, k={k}, p={p}: {res}")
         binomial += res
-    return binomial
-
-
-def test_esercizio():
-    assert binomiale.Binomiale().execute() == soluzione()
-
-
-def test_binomiale_2():
-    assert binomiale.Binomiale2().execute() == soluzione_2()
+    assert probabilita.Binomiale().execute() == binomial
