@@ -17,13 +17,4 @@ class DueCampioni(Esercizio):
         )
 
     def execute(self) -> tuple[float, float]:
-        n_a = 60
-        n_b = 70
-        mu_a = 16
-        mu_b = 19
-        alpha = 0.04 / 2
-        dev_std_a = 4
-        dev_std_b = 5
-        z = f.norm(1 - alpha)
-        conf = z * math.sqrt((pow(dev_std_a, 2) / n_a) + (pow(dev_std_b, 2) / n_b))
-        return (mu_b - mu_a) - conf, (mu_b - mu_a) + conf
+        pass
