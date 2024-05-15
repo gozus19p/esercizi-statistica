@@ -1,6 +1,7 @@
 import math
 from statistica_metodologica import funzioni as f
 import esercizi.marconi.verifica_di_ipotesi as vi
+from scipy import stats as s
 
 
 def test_verifica_di_ipotesi():
@@ -57,3 +58,78 @@ def test_verifica_di_ipotesi_3():
     cv = f.norm(1 - alpha)
     expected = (cv > z >= 0) or (cv < z <= 0)
     assert vi.VerificaDiIpotesi_3().execute() == expected
+
+
+def test_verifica_di_ipotesi_4():
+    mu = 9
+    dev_std = 0.8
+    n = 60
+    mu_c = 8.4
+    alpha = 0.01
+
+    z = (mu_c - mu) / dev_std * math.sqrt(n)
+    cv = f.norm((alpha / 2))
+    expected = (cv > z >= 0) or (cv < z <= 0)
+    assert vi.VerificaDiIpotesi_4().execute() == expected
+
+
+def test_verifica_di_ipotesi_5():
+    p = 0.70
+    n = 180
+    k = 140
+    p_hat = k / n
+    alpha = 0.01
+
+    # H0 -> p<=0.7, H1 -> p>0.7
+    z = (p_hat - p) / math.sqrt(p * (1 - p) / n)
+    cv = f.norm(1 - alpha)
+    expected = (cv > z >= 0) or (cv < z <= 0)
+    assert vi.VerificaDiIpotesi_5().execute() == expected
+
+
+def test_verifica_di_ipotesi_6():
+    n = 200
+    mu = 69
+    dev_std = 9.3
+    mu_c = 72.4
+    alpha = 0.05
+
+    # H0 -> mu<=69, H1 -> mu > 69
+
+    z = (mu_c - mu) / dev_std * math.sqrt(n)
+    cv = f.norm(1 - alpha)
+    expected = (cv > z >= 0) or (cv < z <= 0)
+    assert vi.VerificaDiIpotesi_6().execute() == expected
+
+
+def test_verifica_di_ipotesi_7():
+    print("""
+    In questo caso si usa la T di Student. I passaggi da fare sono:
+    1) Calcolare la media campionaria.
+    2) Calcolare la deviazione standard campionaria.
+    3) Calcolare l'errore standard (dev.std. diviso radq(n)).
+    4) Tramite la T di Student trovare il valore critico per 1 - alpha/2 (divido per due perché con la T ho due code, è
+       simmetrica).
+    5) Calcolo il margine d'errore facendo il prodotto tra errore standard e valore critico.
+    6) Alla media campionaria aggiungo e tolgo il margine d'errore, individuando l'intervallo desiderato.
+    """)
+    data = [
+        19.8, 20.1, 20, 19.3, 19.9, 20.4, 20.3, 19.6, 20.6
+    ]
+    alpha = 0.05
+
+    media_campionaria = f.mean(data)
+    dev_std_campionaria = f.stdev(data, population=True)
+
+    n = len(data)
+    errore_standard = dev_std_campionaria / math.sqrt(n)
+    cv = s.t.ppf(1 - (alpha / 2), df=n - 1)
+    print(f"Il valore critico è:                        {cv}")
+
+    margine_errore = errore_standard * cv
+    print(f"Il margine d'errore è:                      {margine_errore}")
+    superiore = media_campionaria + margine_errore
+    inferiore = media_campionaria - margine_errore
+    print(f"La media campionaria è:                     {media_campionaria}")
+    print(f"Gli intervalli inferiore e superiore sono:  {inferiore} e {superiore}")
+    assert inferiore, superiore == vi.VerificaDiIpotesi_7().execute()

@@ -8,7 +8,6 @@ class DueCampioni(Esercizio):
     def __init__(self):
         super() \
             .__init__(
-            "Esercizio su stima media di due campioni",
             """Per confrontare 2 tipi di motore A e B, è stato condotto uno studio sui chilometri percorsi con una 
             data quantità di combustibile in litri. Sono stati fatti 60 esperimenti con il motore A, 70 con il motore 
             B. Tipo di combustibile e altre variabili sono considerati costanti. Con il motore A si sono percorsi 

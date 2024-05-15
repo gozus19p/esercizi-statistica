@@ -5,8 +5,8 @@ Out = TypeVar("Out")
 
 
 class Esercizio(Generic[Out], ABC):
-    def __init__(self, nome: str, consegna: str):
-        self.nome = nome
+    def __init__(self, consegna: str):
+        self.nome = self.__class__.__name__
         self.consegna = consegna
 
     @abstractmethod
