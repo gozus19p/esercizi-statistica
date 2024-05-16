@@ -1,6 +1,6 @@
 import math
-from statistica_metodologica import funzioni as f
-from esercizi.esercizio import Esercizio, Out
+import funzioni as f
+from esercizio import Esercizio, Out
 
 
 class DueCampioni(Esercizio):

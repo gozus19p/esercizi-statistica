@@ -1,5 +1,5 @@
-from statistica_metodologica import funzioni as f
-from esercizi.marconi import probabilita
+import funzioni as f
+from marconi import probabilita
 
 
 def test_binomiale():

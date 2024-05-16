@@ -1,5 +1,5 @@
 import math
-from statistica_metodologica import funzioni as f
+import funzioni as f
 
 """
 5) Eserciziario su variabili casuali discrete.

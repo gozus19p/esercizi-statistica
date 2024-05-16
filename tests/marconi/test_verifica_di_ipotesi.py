@@ -1,6 +1,6 @@
 import math
-from statistica_metodologica import funzioni as f
-import esercizi.marconi.verifica_di_ipotesi as vi
+import funzioni as f
+import marconi.verifica_di_ipotesi as vi
 from scipy import stats as s
 
 

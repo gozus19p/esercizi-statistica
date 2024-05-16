@@ -1,5 +1,5 @@
-from esercizi.esercizio import Esercizio
-from statistica_metodologica import funzioni as f
+from esercizio import Esercizio
+import funzioni as f
 import scipy.stats as s
 import math
 

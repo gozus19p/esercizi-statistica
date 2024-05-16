@@ -1,6 +1,6 @@
 import math
-from statistica_metodologica import funzioni as f
-from esercizi.marconi.due_campioni import DueCampioni
+import funzioni as f
+from marconi.due_campioni import DueCampioni
 
 
 def soluzione() -> tuple[float, float]:

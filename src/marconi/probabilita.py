@@ -1,5 +1,5 @@
-from statistica_metodologica import funzioni as f
-from esercizi.esercizio import Esercizio
+import funzioni as f
+from esercizio import Esercizio
 
 
 class Binomiale(Esercizio):
@@ -13,10 +13,7 @@ class Binomiale(Esercizio):
         )
 
     def execute(self) -> float:
-        n = 10
-        p = 4 / 5
-        k = 7
-        return f.dist_binomial(n, k, p)
+        pass
 
 
 class Binomiale2(Esercizio):
@@ -33,9 +30,7 @@ class Binomiale2(Esercizio):
         )
 
     def execute(self) -> float:
-        n = 80
-        p = 1/4
-        return sum([f.dist_binomial(n, k, p) for k in range(25, 31)])
+        pass
 
 
 if __name__ == '__main__':
