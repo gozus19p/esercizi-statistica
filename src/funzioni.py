@@ -21,7 +21,7 @@ def median(values: list[float]) -> float:
 
 def variance(values: list[float], population: bool = True) -> float:
     mean_ = mean(values)
-    to_subtract = 1 if population else 0
+    to_subtract = 0 if population else 1
     return sum([pow(x - mean_, 2) for x in values]) / (len(values) - to_subtract)
 
 
@@ -50,6 +50,10 @@ def test_z_normale(n: int, x: int, p0: float) -> float:
 
 def norm(alpha: float) -> float:
     return stats.norm.ppf(alpha)
+
+
+def norm_t(alpha: float, df: int) -> float:
+    return stats.t.ppf(alpha, df=df)
 
 
 def dist_binomial(n: int, k: int, p: float) -> float:

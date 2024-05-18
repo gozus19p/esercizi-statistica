@@ -42,7 +42,7 @@ def test_verifica_di_ipotesi_2():
 
 def test_verifica_di_ipotesi_3():
     # In questo caso, occorre calcolare la distribuzione z con al numeratore la differenza delle due medie (campionaria
-    # e della popolazione) e al denominatore la dev.std per la radice di n
+    # e della popolazione) e al denominatore la dev.std diviso la radice di n
     mu_p = 6
     n = 100
     dev_std = 0.15
@@ -51,12 +51,12 @@ def test_verifica_di_ipotesi_3():
     # Non essendo stato specificato il livello di significatività, lo definiamo a 0.05
     alpha = 0.05
 
-    # Lo si divide in 2 perché il test è bilaterale, ha due code
-    alpha /= 2
+    z = (mu_c - mu_p) / dev_std / math.sqrt(n)
 
-    z = (mu_c - mu_p) / dev_std * math.sqrt(n)
-    cv = f.norm(1 - alpha)
-    expected = (cv > z >= 0) or (cv < z <= 0)
+    # Il calcolo del p-value calcola il doppio del risultato del valore critico di z perché il test in questione è
+    # bilaterale
+    p_value = 2 * f.norm(1 - z)
+    expected = p_value < alpha
     assert vi.VerificaDiIpotesi_3().execute() == expected
 
 
@@ -82,6 +82,9 @@ def test_verifica_di_ipotesi_5():
 
     # H0 -> p<=0.7, H1 -> p>0.7
     z = (p_hat - p) / math.sqrt(p * (1 - p) / n)
+
+    # Valore massimo per cui l'ipotesi nulla risulta falsa, se calcolo il complemento a 1 sto calcolando il valore
+    # massimo per cui non rifiuto l'ipotesi nulla (l'inverso)
     cv = f.norm(1 - alpha)
     expected = (cv > z >= 0) or (cv < z <= 0)
     assert vi.VerificaDiIpotesi_5().execute() == expected
@@ -96,9 +99,9 @@ def test_verifica_di_ipotesi_6():
 
     # H0 -> mu<=69, H1 -> mu > 69
 
-    z = (mu_c - mu) / dev_std * math.sqrt(n)
-    cv = f.norm(1 - alpha)
-    expected = (cv > z >= 0) or (cv < z <= 0)
+    z = (mu_c - mu) / dev_std / math.sqrt(n)
+    p_value = 1 - f.norm(z)
+    expected = p_value < alpha
     assert vi.VerificaDiIpotesi_6().execute() == expected
 
 
@@ -114,12 +117,12 @@ def test_verifica_di_ipotesi_7():
     6) Alla media campionaria aggiungo e tolgo il margine d'errore, individuando l'intervallo desiderato.
     """)
     data = [
-        19.8, 20.1, 20, 19.3, 19.9, 20.4, 20.3, 19.6, 20.6
+        19.8, 20.1, 20.0, 19.3, 19.9, 20.4, 20.3, 19.6, 20.6
     ]
     alpha = 0.05
 
     media_campionaria = f.mean(data)
-    dev_std_campionaria = f.stdev(data, population=True)
+    dev_std_campionaria = f.stdev(data, population=False)
 
     n = len(data)
     errore_standard = dev_std_campionaria / math.sqrt(n)
@@ -132,4 +135,6 @@ def test_verifica_di_ipotesi_7():
     inferiore = media_campionaria - margine_errore
     print(f"La media campionaria è:                     {media_campionaria}")
     print(f"Gli intervalli inferiore e superiore sono:  {inferiore} e {superiore}")
-    assert inferiore, superiore == vi.VerificaDiIpotesi_7().execute()
+    inferiore_r, superiore_r = vi.VerificaDiIpotesi_7().execute()
+    assert inferiore == inferiore_r
+    assert superiore == superiore_r
