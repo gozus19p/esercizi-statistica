@@ -3,6 +3,15 @@ from marconi import probabilita
 
 
 def test_binomiale():
+    n = 10
+    k = 7
+    p = 4 / 5
+
+    binomial = f.binomial_coefficient(n, k) * (p ** k) * ((1 - p) ** (n - k))
+    assert probabilita.Binomiale().execute() == binomial
+
+
+def test_binomiale_2():
     print("""
         Si prenda in considerazione un concorso pubblico e in particolare l'esecuzione della prova preselettiva basata su un
         test a risposta multipla composto da 200 domande. Per ogni domanda ci sono 4 risposte alternative e solo una delle 4
@@ -24,4 +33,4 @@ def test_binomiale():
         res = f.dist_binomial(n, k, p)
         print(f"Binomiale per n={n}, k={k}, p={p}: {res}")
         binomial += res
-    assert probabilita.Binomiale().execute() == binomial
+    assert probabilita.Binomiale2().execute() == binomial

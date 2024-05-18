@@ -3,7 +3,7 @@ import funzioni as f
 from marconi.due_campioni import DueCampioni
 
 
-def soluzione() -> tuple[float, float]:
+def test_due_campioni():
     print("""
     Per confrontare 2 tipi di motore A e B, è stato condotto uno studio sui chilometri percorsi con una data quantità di
     combustibile in litri. Sono stati fatti 60 esperimenti con il motore A, 70 con il motore B. Tipo di combustibile e
@@ -25,13 +25,8 @@ def soluzione() -> tuple[float, float]:
     z = f.norm(1 - alpha)
     r = z * math.sqrt(variance_a / n_a + variance_b / n_b)
 
-    upper = mu_b - mu_a + r
-    lower = mu_b - mu_a - r
-    return lower, upper
-
-
-def test_due_campioni():
+    upper_e = mu_b - mu_a + r
+    lower_e = mu_b - mu_a - r
     lower, upper = DueCampioni().execute()
-    lower_e, upper_e = soluzione()
     assert lower == lower_e
     assert upper == upper_e
