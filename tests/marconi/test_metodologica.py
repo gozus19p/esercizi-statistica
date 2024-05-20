@@ -30,36 +30,33 @@ def test_metodologica_1():
 
 
 def test_metodologica_2():
-    data = [
-        ["1-9", 1],
-        ["10-20", 1],
-        ["21-31", 100]
-    ]
-    for d in data:
-        interval = d[0].split("-")
+    data = {
+        "1-9": [.1],
+        "10-20": [1],
+        "21-31": [10]
+    }
+    cumulative = 0
+    # 0 data, 1 cumulative, 2 midpoint
+    for k in data.keys():
+        interval = k.split("-")
         lower, upper = int(interval[0]), int(interval[1])
-        midpoint = (lower + upper) / 2
-        d.append(midpoint)
-        d.append(midpoint * d[1])
-    mean = sum(list(map(lambda x: float(x[3]), data))) / sum(list(map(lambda x: float(x[1]), data)))
-    print(f"Mean = {mean}")
+        cumulative += data[k][0]
+        data[k].append(cumulative)
+        midpoint = (upper + lower) / 2
+        data[k].append(midpoint)
 
-    cumulatives, total = [], 0
-    for d in data:
-        total = total + d[1]
-        cumulatives.append(total)
-    print(f"Cumulatives = {cumulatives}")
-    print(f"Total = {total}")
+    # Per calcolare la mediana effettiva di una classe di frequenza occorre:
+    # - L   -> il limite inferiore della classe della mediana
+    # - CF  -> frequenza cumulativa della classe precedente
+    # - f   -> frequenza della classe mediana
+    # - w   -> ampiezza della classe
+    L = 21
+    CF = 1.1
+    f = 10
+    w = 10
+    median = L + ((11.2 / 2) - CF) / f * w
+    mean = sum([d[0] * d[2] for d in data.values()]) / cumulative
 
-    middle_position = (total if total % 2 == 1 else total + 1) / 2
-    print(f"Middle position = {middle_position}")
-    mp = middle_position
-    median = -1
-    for i, d in enumerate(data):
-        if mp - d[1] > middle_position:
-            median = data[i][0]
-            break
-    print(f"Median = {median}")
     assert m.Metodologica_2().execute() == (mean, median)
 
 
