@@ -23,21 +23,15 @@ def test_verifica_di_ipotesi():
 
 
 def test_verifica_di_ipotesi_2():
-    p0 = 0.75
+    # Per n molto piccolo (<30) si può usare la binomiale
+    p0 = 0.7
     n = 15
-    k = 10
+    k = 11
     alpha = 0.10
 
-    # Dato che il test è bilaterale (H1 --> !=H0) dividiamo alpha per 2
-    alpha /= 2
-
-    # Si effettua un test statistico per la proporzione del campione, calcolando la proporzione campionaria
-    p_hat = k / n
-    z = (p_hat - p0) / math.sqrt(p0 * (1 - p0) / n)
-    cv = f.norm(1 - alpha)
-    cv_n = -cv
-    expected = cv_n < z < cv
-    assert vi.VerificaDiIpotesi_2().execute() == expected
+    cv = f.norm(1 - alpha / 2)
+    z = f.binomial_coefficient(n, k) * pow(p0, k) * pow(1 - p0, n - k)
+    assert vi.VerificaDiIpotesi_2().execute() == (z < cv)
 
 
 def test_verifica_di_ipotesi_3():
@@ -55,7 +49,7 @@ def test_verifica_di_ipotesi_3():
 
     # Il calcolo del p-value calcola il doppio del risultato del valore critico di z perché il test in questione è
     # bilaterale
-    p_value = 2 * f.norm(1 - z)
+    p_value = 2 * f.norm(z)
     expected = p_value < alpha
     assert vi.VerificaDiIpotesi_3().execute() == expected
 
@@ -67,9 +61,9 @@ def test_verifica_di_ipotesi_4():
     mu_c = 8.4
     alpha = 0.01
 
-    z = (mu_c - mu) / dev_std * math.sqrt(n)
+    z = (mu_c - mu) / dev_std / math.sqrt(n)
     cv = f.norm((alpha / 2))
-    expected = (cv > z >= 0) or (cv < z <= 0)
+    expected = abs(z) < cv
     assert vi.VerificaDiIpotesi_4().execute() == expected
 
 
@@ -85,8 +79,8 @@ def test_verifica_di_ipotesi_5():
 
     # Valore massimo per cui l'ipotesi nulla risulta falsa, se calcolo il complemento a 1 sto calcolando il valore
     # massimo per cui non rifiuto l'ipotesi nulla (l'inverso)
-    cv = f.norm(1 - alpha)
-    expected = (cv > z >= 0) or (cv < z <= 0)
+    p_value = 1 - f.norm(z)
+    expected = p_value < alpha
     assert vi.VerificaDiIpotesi_5().execute() == expected
 
 
